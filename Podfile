@@ -7,5 +7,6 @@ target 'Weather' do
   inhibit_all_warnings!
 
   # Pods for Weather
+  pod 'SwiftLint'
 
 end

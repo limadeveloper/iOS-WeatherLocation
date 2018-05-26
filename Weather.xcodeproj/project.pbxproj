@@ -120,6 +120,7 @@
 			buildConfigurationList = 827E89A320B9BBF0004306D0 /* Build configuration list for PBXNativeTarget "Weather" */;
 			buildPhases = (
 				A95BBC2457F515A9755D4085 /* [CP] Check Pods Manifest.lock */,
+				827E89AA20B9C1CE004306D0 /* SwiftLint */,
 				827E898D20B9BBEE004306D0 /* Sources */,
 				827E898E20B9BBEE004306D0 /* Frameworks */,
 				827E898F20B9BBEE004306D0 /* Resources */,
@@ -180,6 +181,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		827E89AA20B9C1CE004306D0 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"";
+		};
 		A95BBC2457F515A9755D4085 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

@@ -12,6 +12,8 @@
 		827E899A20B9BBEE004306D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 827E899820B9BBEE004306D0 /* Main.storyboard */; };
 		827E899C20B9BBF0004306D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 827E899B20B9BBF0004306D0 /* Assets.xcassets */; };
 		827E899F20B9BBF0004306D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 827E899D20B9BBF0004306D0 /* LaunchScreen.storyboard */; };
+		82F3D2F520BA15DD00A395E1 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F3D2F420BA15DD00A395E1 /* Network.swift */; };
+		82F3D2F820BA2AA200A395E1 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F3D2F720BA2AA200A395E1 /* TypeAlias.swift */; };
 		85CC2273FB4CF2044D12CA9F /* Pods_Weather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDA03AE8F6F697011F8B358 /* Pods_Weather.framework */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +28,8 @@
 		827E899B20B9BBF0004306D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		827E899E20B9BBF0004306D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		827E89A020B9BBF0004306D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		82F3D2F420BA15DD00A395E1 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		82F3D2F720BA2AA200A395E1 /* TypeAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAlias.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +76,9 @@
 			children = (
 				827E89A720B9BC4C004306D0 /* App */,
 				827E89A920B9BC60004306D0 /* Contents */,
+				82F3D2F320BA15B500A395E1 /* Network */,
 				827E89A820B9BC57004306D0 /* Storyboard */,
+				82F3D2F620BA2A9700A395E1 /* Util */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -104,6 +110,22 @@
 			path = Contents;
 			sourceTree = "<group>";
 		};
+		82F3D2F320BA15B500A395E1 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				82F3D2F420BA15DD00A395E1 /* Network.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		82F3D2F620BA2A9700A395E1 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				82F3D2F720BA2AA200A395E1 /* TypeAlias.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		AF788F006AA84CDDB5A6C613 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +146,7 @@
 				827E898D20B9BBEE004306D0 /* Sources */,
 				827E898E20B9BBEE004306D0 /* Frameworks */,
 				827E898F20B9BBEE004306D0 /* Resources */,
+				24947E63282DA8C0CA73919D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -181,6 +204,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		24947E63282DA8C0CA73919D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Weather/Pods-Weather-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Weather/Pods-Weather-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		827E89AA20B9C1CE004306D0 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -222,6 +263,8 @@
 			files = (
 				827E899720B9BBEE004306D0 /* ViewController.swift in Sources */,
 				827E899520B9BBEE004306D0 /* AppDelegate.swift in Sources */,
+				82F3D2F820BA2AA200A395E1 /* TypeAlias.swift in Sources */,
+				82F3D2F520BA15DD00A395E1 /* Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

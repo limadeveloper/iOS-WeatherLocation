@@ -17,6 +17,7 @@ class Network {
   // MARK: - Enums
   enum EndPoint: String {
     case location
+    case imageWeatherState = "static/img/weather/"
   }
   
   enum URLAPI: String {

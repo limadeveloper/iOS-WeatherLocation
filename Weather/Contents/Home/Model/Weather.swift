@@ -10,7 +10,7 @@ import Foundation
 
 struct Weather: Codable {
   
-  let id: String
+  let id: Int
   let stateAbbreviation: String
   let date: String
   let minTemp: Double

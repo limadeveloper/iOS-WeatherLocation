@@ -9,5 +9,6 @@ target 'Weather' do
   # Pods for Weather
   pod 'SwiftLint'
   pod 'Alamofire'
+  pod 'AlamofireImage'
 
 end

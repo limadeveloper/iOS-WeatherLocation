@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  Weather
 //
 //  Created by John Lima on 26/05/18.
@@ -8,8 +8,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
   
+  // MARK: - Properties
+  
+  // MARK: - Overrides
   override func viewDidLoad() {
     super.viewDidLoad()
   }

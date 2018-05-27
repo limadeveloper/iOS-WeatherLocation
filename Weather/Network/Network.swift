@@ -24,18 +24,33 @@ class Network {
   }
   
   // MARK: - Public Methods
-  func fetchWeather(with woeid: Int, completion: @escaping CompletionBlock.FetchWeather) {
+  func fetchWeather(with woeid: Int, completion: @escaping CompletionBlock.FetchLocationWeather) {
     
     let url = URL(string: "\(URLAPI.weather.rawValue)/\(EndPoint.location.rawValue)/\(woeid)")!
     
     Alamofire.request(url).validate().responseJSON { response in
-      let result = try? JSONSerialization.jsonObject(with: response.data ?? Data(), options: .allowFragments) as? [DataType.JSON]
-      let weather = result ?? nil
-      completion(weather, response.error)
+      let result = try? JSONSerialization.jsonObject(with: response.data ?? Data(), options: .allowFragments) as? DataType.JSON
+      let location = result??.toLocation()
+      completion(location, response.error)
     }
   }
   
   func isConnectedToInternet() -> Bool {
     return NetworkReachabilityManager()?.isReachable ?? false
+  }
+}
+
+// MARK: - Extensions
+extension Data {
+  func toLocation() -> Location? {
+    let decoder = JSONDecoder()
+    return try? decoder.decode(Location.self, from: self)
+  }
+}
+
+extension Collection {
+  func toLocation() -> Location? {
+    guard let location = try? JSONSerialization.data(withJSONObject: self, options: .prettyPrinted).toLocation() else { return nil }
+    return location
   }
 }

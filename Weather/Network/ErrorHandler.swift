@@ -15,6 +15,6 @@ class ErrorHandler {
   
   // MARK: - Public Methods
   func showToastAlert(_ error: Error, target: AnyObject) {
-    print(" error: \(error)")
+    // TODO: Show toast alert to show the error
   }
 }

@@ -24,8 +24,9 @@ class HomeViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var temperatureScaleSwitch: UISwitch!
   
+  let locationManager = LocationManager.shared
   var locationWeather: Location?
-  var coordinate: Coordinate?
+  var locationInfo: LocationInfo?
   
   // swiftlint:disable weak_delegate
   var dataSourceAndDelegate: DataSourceAndDelegate?
@@ -34,8 +35,19 @@ class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     updateUI()
-    loadDeviceLocation()
     loadData()
+  }
+  
+  // MARK: - Public Methods
+  func loadDeviceLocation() {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    locationManager.fetchLocationInfo { [weak self] result, _ in
+      UIApplication.shared.isNetworkActivityIndicatorVisible = false
+      guard let strongSelf = self else { return }
+      strongSelf.locationInfo = result
+      strongSelf.loadData()
+      strongSelf.locationManager.count = Int()
+    }
   }
   
   // MARK: - Private Methods
@@ -53,15 +65,22 @@ class HomeViewController: UIViewController {
       object.layer.borderWidth = tableBorderWidth
       object.layer.borderColor = tableBorderColor.cgColor
     }
+    
+    locationManager.delegate = dataSourceAndDelegate
   }
   
-  private func loadDeviceLocation() {
-    coordinate = LocationManager.shared.getCoordinates()
+  private func updateMapLocationPoint() {
+    let latitude = Double(locationInfo?.latitude ?? String()) ?? locationManager.kDefaultLatitude
+    let longitude = Double(locationInfo?.longitude ?? String()) ?? locationManager.kDefaultLongitude
+    let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    let region = MKCoordinateRegion(center: center, span: locationManager.coordinateSpan)
+    mapView.setRegion(region, animated: true)
   }
   
   private func loadData() {
-    guard let coordinate = coordinate else { return }
-    Network.shared.fetchWeather(with: coordinate.woeid) { [weak self] (location, error) in
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    Network.shared.fetchWeather(with: locationInfo?.woeid ?? locationManager.kDefaultWOEID) { [weak self] (location, error) in
+      UIApplication.shared.isNetworkActivityIndicatorVisible = false
       guard let strongSelf = self else { return }
       if let error = error {
         ErrorHandler.shared.showToastAlert(error, target: strongSelf)
@@ -75,7 +94,11 @@ class HomeViewController: UIViewController {
   private func showData() {
     guard let location = locationWeather else { return }
     titleLabel.text = location.title + breaklineSymbol + getTodayTemp(by: location)
-    tableView.reloadData()
+    DispatchQueue.main.async { [weak self] in
+      guard let strongSelf = self else { return }
+      strongSelf.tableView.reloadData()
+      strongSelf.updateMapLocationPoint()
+    }
   }
   
   private func getTodayTemp(by location: Location) -> String {

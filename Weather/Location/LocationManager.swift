@@ -7,15 +7,61 @@
 //
 
 import Foundation
+import CoreLocation
+import MapKit
 
-class LocationManager {
+protocol LocationManagerDelegate: class {
+  func locationManagerdidUpdateLocations()
+}
+
+class LocationManager: NSObject {
+  
+  // MARK: - Constants
+  let kIncrement = 1
+  let kRequestInterval = 7
+  let kDefaultWOEID = 2487956
+  let kDefaultLatitude = 50.068
+  let kDefaultLongitude = -5.316
+  let coordinateSpan = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
   
   // MARK: - Properties
   static let shared = LocationManager()
   
+  private var manager = CLLocationManager()
+  private var currentCoordinate: CLLocationCoordinate2D?
+  
+  var count = Int()
+  weak var delegate: LocationManagerDelegate?
+  
   // MARK: - Public Methods
-  func getCoordinates() -> Coordinate? {
-    let result = Coordinate(title: "San Francisco", woeid: 2487956, latitude: "37.777119", longitude: "-122.41964")
-    return result
+  func requestAuthorization() {
+    manager.requestWhenInUseAuthorization()
+    if CLLocationManager.locationServicesEnabled() {
+      manager.delegate = self
+      manager.desiredAccuracy = kCLLocationAccuracyBest
+      manager.startUpdatingLocation()
+    } else {
+      // TODO: Show alert to permit access location
+    }
+  }
+    
+  func fetchLocationInfo(completion: CompletionBlock.FetchLocationInfo?) {
+    guard let coordinate = currentCoordinate else { completion?(nil, nil); return }
+    Network.shared.fetchLocationInfo(latitude: coordinate.latitude, longitude: coordinate.longitude) { (locationInfo, error) in
+      var result = locationInfo
+      result?.latitude = String(coordinate.latitude)
+      result?.longitude = String(coordinate.longitude)
+      completion?(result, error)
+    }
+  }
+}
+
+// MARK: - Extensions
+extension LocationManager: CLLocationManagerDelegate {
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    guard let coordinate = manager.location?.coordinate else { return }
+    currentCoordinate = coordinate
+    count += kIncrement
+    delegate?.locationManagerdidUpdateLocations()
   }
 }

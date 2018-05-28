@@ -1,5 +1,5 @@
 //
-//  Coordinate.swift
+//  LocationInfo.swift
 //  Weather
 //
 //  Created by John Lima on 28/05/18.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct Coordinate {
+struct LocationInfo: Codable {
   let title: String
   let woeid: Int
-  let latitude: String
-  let longitude: String
+  var latitude: String?
+  var longitude: String?
 }

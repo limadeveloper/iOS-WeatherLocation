@@ -10,6 +10,7 @@ import Foundation
 
 struct CompletionBlock {
   typealias FetchLocationWeather = (Location?, Error?) -> Void
+  typealias FetchLocationInfo = (LocationInfo?, Error?) -> Void
   typealias Empty = () -> Void
 }
 

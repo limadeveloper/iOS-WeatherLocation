@@ -33,3 +33,12 @@ extension DataSourceAndDelegate: UITableViewDataSource {
     return cell
   }
 }
+
+extension DataSourceAndDelegate: LocationManagerDelegate {
+  func locationManagerdidUpdateLocations() {
+    guard let controller = controller else { return }
+    if controller.locationManager.count == controller.locationManager.kRequestInterval {
+      controller.loadDeviceLocation()
+    }
+  }
+}

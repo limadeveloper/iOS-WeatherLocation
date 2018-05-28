@@ -17,11 +17,11 @@ class Network {
   // MARK: - Enums
   enum EndPoint: String {
     case location
-    case imageWeatherState = "static/img/weather/"
   }
   
   enum URLAPI: String {
     case weather = "https://www.metaweather.com/api/"
+    case imageWeatherState = "https://www.metaweather.com/static/img/weather/"
   }
   
   // MARK: - Public Methods

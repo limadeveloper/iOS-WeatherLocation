@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class HomeTableViewCell: UITableViewCell, ReusableView {
   
@@ -14,8 +15,8 @@ class HomeTableViewCell: UITableViewCell, ReusableView {
   private let emptyDate = "📅"
   private let degreeSymbol = "º"
   private let weatherTypeImage = "png"
-  private let weatherSizeImage = "120"
-  private let weatherStateImageFrame = CGRect(x: CGFloat(), y: CGFloat(), width: 44, height: 44)
+  private let stringEndpointAPI = "api/"
+  private let weatherStateImageFrame = CGRect(x: CGFloat(), y: CGFloat(), width: 30, height: 30)
   
   // MARK: - Properties
   @IBOutlet weak var dateLabel: UILabel!
@@ -44,8 +45,10 @@ class HomeTableViewCell: UITableViewCell, ReusableView {
   // MARK: - Private Methods
   private func addAccessoryView(with weather: Weather) {
     let imageView = UIImageView(frame: weatherStateImageFrame)
-    let imageURL = URL(string: Network.URLAPI.weather.rawValue + Network.EndPoint.imageWeatherState.rawValue + "\(weatherTypeImage)/\(weatherSizeImage)/\(weather.stateAbbreviation).\(weatherTypeImage)")!
-    print(" URL image: \(imageURL)")
+    imageView.contentMode = .scaleAspectFit
+    let stringImage = Network.URLAPI.imageWeatherState.rawValue + weatherTypeImage + "/\(weather.stateAbbreviation).\(weatherTypeImage)"
+    let imageURL = URL(string: stringImage.replacingOccurrences(of: stringEndpointAPI, with: String()))!
+    imageView.af_setImage(withURL: imageURL, placeholderImage: #imageLiteral(resourceName: "weather"))
     accessoryView = imageView
   }
 }

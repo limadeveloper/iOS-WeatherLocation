@@ -25,6 +25,7 @@ class HomeViewController: UIViewController {
   @IBOutlet weak var temperatureScaleSwitch: UISwitch!
   
   var locationWeather: Location?
+  var coordinate: Coordinate?
   
   // swiftlint:disable weak_delegate
   var dataSourceAndDelegate: DataSourceAndDelegate?
@@ -33,6 +34,7 @@ class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     updateUI()
+    loadDeviceLocation()
     loadData()
   }
   
@@ -53,8 +55,13 @@ class HomeViewController: UIViewController {
     }
   }
   
+  private func loadDeviceLocation() {
+    coordinate = LocationManager.shared.getCoordinates()
+  }
+  
   private func loadData() {
-    Network.shared.fetchWeather(with: 2487956) { [weak self] (location, error) in
+    guard let coordinate = coordinate else { return }
+    Network.shared.fetchWeather(with: coordinate.woeid) { [weak self] (location, error) in
       guard let strongSelf = self else { return }
       if let error = error {
         ErrorHandler.shared.showToastAlert(error, target: strongSelf)

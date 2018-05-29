@@ -26,7 +26,7 @@ class HomeTableViewCell: UITableViewCell, ReusableView {
     didSet {
       guard let weather = weather else { return }
       dateLabel.text = weather.date.shortDate ?? emptyDate
-      maxTemperatureLabel.text = String(Int(weather.maxTemp)) + degreeSymbol
+      maxTemperatureLabel.text = String(Int(weather.maxTemp.toDegreeScale)) + degreeSymbol
       addAccessoryView(with: weather)
     }
   }

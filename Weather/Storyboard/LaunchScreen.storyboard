@@ -25,7 +25,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.388427734375" green="0.87109375" blue="0.74264865451388884" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.38823529411764707" green="0.87058823529411766" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xBB-Gs-vs8" secondAttribute="trailing" constant="20" id="1ue-HL-u5Y"/>
                             <constraint firstItem="xBB-Gs-vs8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Zl9-oL-t9w"/>
@@ -40,6 +40,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="weather" width="350" height="350"/>
+        <image name="weather" width="512" height="512"/>
     </resources>
 </document>

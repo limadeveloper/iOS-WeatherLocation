@@ -88,6 +88,9 @@
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Bw5-jy-Jyy">
                                 <rect key="frame" x="310" y="724.66666666666663" width="51" height="31"/>
+                                <connections>
+                                    <action selector="changeValueWithSender:" destination="BYZ-38-t0r" eventType="valueChanged" id="sOZ-pY-RIu"/>
+                                </connections>
                             </switch>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -111,9 +114,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="degreeScaleLabel" destination="V6X-qe-Ogd" id="zZh-Xy-YQA"/>
                         <outlet property="mapView" destination="xOP-md-UOr" id="47n-nQ-JTs"/>
                         <outlet property="tableView" destination="Svp-kM-L5k" id="Pki-nl-mOm"/>
-                        <outlet property="temperatureScaleSwitch" destination="Bw5-jy-Jyy" id="Rn0-AW-IfD"/>
                         <outlet property="titleLabel" destination="i0G-Ra-GuW" id="ZI3-ha-I7q"/>
                     </connections>
                 </viewController>

@@ -17,6 +17,8 @@ struct LocalizedUtil {
     static let alertMessageAllowLocation = "alert.message.allowLocation".localized()
     static let error = "error.error".localized()
     static let errorCellIdentifier = "error.cellIdentifier".localized()
+    static let homeDegreeScaleFahrenheit = "home.degreeScaleLabel.fahrenheit".localized()
+    static let homeDegreeScaleCelsius = "home.degreeScaleLabel.celsius".localized()
   }
 }
 

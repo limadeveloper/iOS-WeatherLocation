@@ -16,3 +16,7 @@
 /* Error */
 "error.error" = "Error";
 "error.cellIdentifier" = "Could not dequeue cell with identifier";
+
+/* Home */
+"home.degreeScaleLabel.fahrenheit" = "Fahrenheit";
+"home.degreeScaleLabel.celsius" = "Celsius";

@@ -12,17 +12,18 @@ import MapKit
 class HomeViewController: UIViewController {
   
   // MARK: - Constants
-  private let degreeSymbol = "º"
-  private let tempEmpty = "--"
-  private let breaklineSymbol = "\n"
-  private let tableBorderWidth: CGFloat = 2
-  private let tableBorderColor: UIColor = .groupTableViewBackground
+  private let kDegreeSymbol = "º"
+  private let kTempEmpty = "--"
+  private let kBreaklineSymbol = "\n"
+  private let kTableBorderWidth: CGFloat = 2
+  private let kTableBorderColor: UIColor = .groupTableViewBackground
+  private let kDegreeLabelFontSize: CGFloat = 17
   
   // MARK: - Properties
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var mapView: MKMapView!
   @IBOutlet weak var tableView: UITableView!
-  @IBOutlet weak var temperatureScaleSwitch: UISwitch!
+  @IBOutlet weak var degreeScaleLabel: UILabel!
   
   let locationManager = LocationManager.shared
   var locationWeather: Location?
@@ -35,6 +36,15 @@ class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     updateUI()
+    loadData()
+  }
+  
+  // MARK: - Actions
+  @IBAction private func changeValue(sender: UISwitch) {
+    SessionManager.shared.degreeScale = .celsius
+    if sender.isOn {
+      SessionManager.shared.degreeScale = .fahrenheit
+    }
     loadData()
   }
   
@@ -62,8 +72,8 @@ class HomeViewController: UIViewController {
     let objects: [UIView] = [tableView, mapView]
     
     for object in objects {
-      object.layer.borderWidth = tableBorderWidth
-      object.layer.borderColor = tableBorderColor.cgColor
+      object.layer.borderWidth = kTableBorderWidth
+      object.layer.borderColor = kTableBorderColor.cgColor
     }
     
     LocationManager.shared.requestAuthorization(in: self)
@@ -94,19 +104,37 @@ class HomeViewController: UIViewController {
   
   private func showData() {
     guard let location = locationWeather else { return }
-    titleLabel.text = location.title + breaklineSymbol + getTodayTemp(by: location)
+    titleLabel.text = location.title + kBreaklineSymbol + getTodayTemp(by: location)
     DispatchQueue.main.async { [weak self] in
       guard let strongSelf = self else { return }
       strongSelf.tableView.reloadData()
       strongSelf.updateMapLocationPoint()
+      strongSelf.setDegreeScaleLabel()
     }
   }
   
   private func getTodayTemp(by location: Location) -> String {
-    var result = tempEmpty
+    var result = kTempEmpty
     if let temp = location.weather.todayMaxTemperature {
-      result = String(Int(temp)) + degreeSymbol
+      result = String(Int(temp.toDegreeScale)) + kDegreeSymbol
     }
     return result
+  }
+  
+  private func setDegreeScaleLabel() {
+    let boldFontAttributed: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: kDegreeLabelFontSize, weight: .bold)]
+    let lightFontAttributed: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: kDegreeLabelFontSize, weight: .light)]
+    switch SessionManager.shared.degreeScale {
+    case .fahrenheit:
+      let attributedText = NSMutableAttributedString(string: LocalizedUtil.Text.homeDegreeScaleCelsius, attributes: lightFontAttributed)
+      let fahrenheitAttributedText = NSAttributedString(string: " / \(LocalizedUtil.Text.homeDegreeScaleFahrenheit)", attributes: boldFontAttributed)
+      attributedText.append(fahrenheitAttributedText)
+      degreeScaleLabel.attributedText = attributedText
+    default:
+      let attributedText = NSMutableAttributedString(string: "\(LocalizedUtil.Text.homeDegreeScaleCelsius) / ", attributes: boldFontAttributed)
+      let fahrenheitAttributedText = NSAttributedString(string: LocalizedUtil.Text.homeDegreeScaleFahrenheit, attributes: lightFontAttributed)
+      attributedText.append(fahrenheitAttributedText)
+      degreeScaleLabel.attributedText = attributedText
+    }
   }
 }

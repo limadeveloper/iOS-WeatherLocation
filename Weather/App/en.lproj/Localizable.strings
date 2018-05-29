@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  Weather
+
+  Created by John Lima on 28/05/18.
+  Copyright © 2018 limadeveloper. All rights reserved.
+*/
+
+/* Alerts */
+"alert.button.done" = "Ok";
+"alert.button.allow" = "Allow";
+"alert.button.cancel" = "Cancel";
+"alert.title.allowLocation" = "Allow Location";
+"alert.message.allowLocation" = "I need know where're you to show the weather for your location";
+
+/* Error */
+"error.error" = "Error";
+"error.cellIdentifier" = "Could not dequeue cell with identifier";

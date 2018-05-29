@@ -8,8 +8,6 @@
 
 import UIKit
 
-private let kAlertButtonDone = "Ok"
-
 class AlertManager {
   
   // MARK: - Properties
@@ -28,7 +26,7 @@ class AlertManager {
     return alert
   }
   
-  func createAlert(title: String? = nil, message: String? = nil, style: UIAlertControllerStyle = .alert, actions: [UIAlertAction]? = [UIAlertAction(title: kAlertButtonDone, style: .cancel, handler: nil)], target: AnyObject?) {
+  func createAlert(title: String? = nil, message: String? = nil, style: UIAlertControllerStyle = .alert, actions: [UIAlertAction]? = [UIAlertAction(title: LocalizedUtil.Text.alertButtonDone, style: .cancel, handler: nil)], target: AnyObject?) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: style)
     if let actions = actions {
       for action in actions {

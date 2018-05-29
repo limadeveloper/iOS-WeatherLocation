@@ -8,8 +8,6 @@
 
 import UIKit
 
-private let kErrorDequeueCellIdenfier = "Could not dequeue cell with identifier"
-
 extension UITableView {
   
   func register<T: UITableViewCell>(_: T.Type) where T: ReusableView {
@@ -24,7 +22,7 @@ extension UITableView {
   
   func dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T where T: ReusableView {
     guard let cell = dequeueReusableCell(withIdentifier: T.defaultReuseIdentifier, for: indexPath) as? T else {
-      fatalError("\(kErrorDequeueCellIdenfier): \(T.defaultReuseIdentifier)")
+      fatalError("\(LocalizedUtil.Text.errorCellIdentifier): \(T.defaultReuseIdentifier)")
     }
     return cell
   }

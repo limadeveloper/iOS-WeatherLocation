@@ -66,6 +66,7 @@ class HomeViewController: UIViewController {
       object.layer.borderColor = tableBorderColor.cgColor
     }
     
+    LocationManager.shared.requestAuthorization(in: self)
     locationManager.delegate = dataSourceAndDelegate
   }
   

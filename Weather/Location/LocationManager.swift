@@ -20,9 +20,9 @@ class LocationManager: NSObject {
   let kIncrement = 1
   let kRequestInterval = 7
   let kDefaultWOEID = 2487956
-  let kDefaultLatitude = 50.068
-  let kDefaultLongitude = -5.316
-  let coordinateSpan = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+  let kDefaultLatitude = 37.777119
+  let kDefaultLongitude = -122.41964
+  let coordinateSpan = MKCoordinateSpan(latitudeDelta: 0.07, longitudeDelta: 0.07)
   
   // MARK: - Properties
   static let shared = LocationManager()
@@ -31,18 +31,15 @@ class LocationManager: NSObject {
   private var currentCoordinate: CLLocationCoordinate2D?
   
   var count = Int()
+  weak var controller: UIViewController?
   weak var delegate: LocationManagerDelegate?
   
   // MARK: - Public Methods
-  func requestAuthorization() {
+  func requestAuthorization(in target: UIViewController?) {
+    manager.delegate = self
+    manager.desiredAccuracy = kCLLocationAccuracyBest
     manager.requestWhenInUseAuthorization()
-    if CLLocationManager.locationServicesEnabled() {
-      manager.delegate = self
-      manager.desiredAccuracy = kCLLocationAccuracyBest
-      manager.startUpdatingLocation()
-    } else {
-      // TODO: Show alert to permit access location
-    }
+    controller = target
   }
     
   func fetchLocationInfo(completion: CompletionBlock.FetchLocationInfo?) {
@@ -58,6 +55,20 @@ class LocationManager: NSObject {
 
 // MARK: - Extensions
 extension LocationManager: CLLocationManagerDelegate {
+  
+  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    switch status {
+    case .authorizedAlways, .authorizedWhenInUse:
+      manager.startUpdatingLocation()
+    case .notDetermined:
+      manager.requestWhenInUseAuthorization()
+    case .denied:
+      ErrorHandler.shared.allowAccessLocation(in: controller)
+    default:
+      break
+    }
+  }
+  
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     guard let coordinate = manager.location?.coordinate else { return }
     currentCoordinate = coordinate
